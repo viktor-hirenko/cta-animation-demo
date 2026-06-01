@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Анімація кнопки Sign up (демо)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./tailwind.css" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main
+      class="cta-animation-demo"
+      id="cta-animation-demo"
+      data-demo-mode="presentation"
+      data-simulate-reduced-motion="false"
+      data-freeze-animations="false"
+    >
+      <nav class="demo-mode-tabs" aria-label="Контекст перегляду">
+        <button
+          type="button"
+          class="demo-mode-tab"
+          data-demo-mode="presentation"
+          aria-pressed="true"
+        >
+          <span class="demo-mode-tab__label">Форма реєстрації</span>
+        </button>
+        <button
+          type="button"
+          class="demo-mode-tab"
+          data-demo-mode="mobile-screenshot"
+          aria-pressed="false"
+        >
+          <span class="demo-mode-tab__label">Мобільний нижній бар</span>
+        </button>
+      </nav>
+
+      <header class="cta-animation-demo__header">
+        <h1 class="cta-animation-demo__title">Анімація кнопки реєстрації</h1>
+        <p class="cta-animation-demo__subtitle" id="demo-header-steps">
+          Задача: частина користувачів заповнює email і пароль, але не натискає <strong>Sign up</strong>.
+          Пропонуємо м’яко підсвітити кнопку, коли форма вже може бути відправлена.
+          <strong>1.</strong> <strong>Заповнити форму</strong> &nbsp;·&nbsp;
+          <strong>2.</strong> Обрати варіант &nbsp;·&nbsp;
+          <strong>3.</strong> Подивитися анімацію на кнопці <strong>Sign up</strong> праворуч.
+        </p>
+      </header>
+
+      <div class="cta-animation-demo__layout">
+        <aside class="demo-controls" aria-label="Керування демо">
+          <h2 class="demo-controls__title">Як користуватися</h2>
+
+          <div class="demo-controls__group demo-controls__group--form-preset">
+            <span class="demo-controls__label">1. Форма</span>
+            <p class="demo-controls__hint">
+              Порожня форма — <strong>Sign up</strong> може виглядати неактивною (чекбокс нижче).
+              Після «Заповнити форму» кнопка стає активною і з’являється анімація.
+            </p>
+            <div class="demo-controls__buttons">
+              <button type="button" class="demo-chip demo-chip--primary" data-preset="ready" aria-pressed="false">
+                Заповнити форму
+              </button>
+              <button type="button" class="demo-chip" data-preset="empty" aria-pressed="true">
+                Очистити форму
+              </button>
+            </div>
+            <label class="demo-controls__toggle" for="simulate-cta-disabled">
+              <input type="checkbox" id="simulate-cta-disabled" checked />
+              <span>Sign up неактивна, поки форма не заповнена</span>
+            </label>
+          </div>
+
+          <div class="demo-controls__group demo-controls__group--presentation">
+            <span class="demo-controls__label" id="demo-presentation-step-label">2. Варіант підсвітки</span>
+            <p class="demo-controls__hint" id="demo-presentation-variant-hint">
+              Що відбувається на кнопці <strong>Sign up</strong> у формі після «Заповнити форму».
+            </p>
+            <fieldset class="demo-animation-picker" id="animation-picker">
+              <legend class="sr-only">Оберіть варіант анімації</legend>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="shimmer" checked />
+                <span>М’який шимер</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="pop-shimmer" />
+                <span>Мікро-pop + м’який шимер</span>
+              </label>
+              <label
+                class="demo-animation-option demo-variant-ui--hidden"
+                data-variant-ui="shimmer-border-trace"
+                hidden
+              >
+                <input type="radio" name="animation-variant" value="shimmer-border-trace" />
+                <span>М’який шимер + обвідна анімація</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="glow" />
+                <span>М’яке світіння (дихання)</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="icon-nudge" />
+                <span>Мікрорух іконки подарунка</span>
+              </label>
+              <label
+                class="demo-animation-option demo-variant-ui--hidden"
+                data-variant-ui="ready-highlight"
+                hidden
+              >
+                <input type="radio" name="animation-variant" value="ready-highlight" />
+                <span>Підсвітка кнопки</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="icon-bounce" />
+                <span>Підстрибування іконки подарунка</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="text-bounce" />
+                <span>Текст торкається подарунка</span>
+              </label>
+              <label class="demo-animation-option">
+                <input type="radio" name="animation-variant" value="hover-glow" />
+                <span>Світіння обводки</span>
+              </label>
+              <span
+                id="hover-only-picker-divider"
+                class="demo-animation-picker__divider demo-hover-desktop-only"
+                role="presentation"
+              >
+                Лише при наведенні (десктоп) — не після «Заповнити форму»
+              </span>
+              <label
+                class="demo-animation-option demo-animation-option--compare demo-animation-option--hover-only"
+              >
+                <input type="radio" name="animation-variant" value="arrow-hover" />
+                <span>Стрілка між текстом і подарунком</span>
+              </label>
+              <label
+                class="demo-animation-option demo-animation-option--compare demo-animation-option--hover-only"
+              >
+                <input type="radio" name="animation-variant" value="arrow-hover-present" />
+                <span>Стрілка + анімований подарунок</span>
+              </label>
+            </fieldset>
+            <button type="button" class="demo-btn-secondary demo-btn-secondary--full" id="replay-presentation">
+              Відтворити
+            </button>
+            <p class="demo-controls__hint demo-controls__hint--after-action">
+              На Sign up у формі праворуч. Прев’ю з «Відтворити» — лише в акордеоні нижче.
+            </p>
+          </div>
+
+          <details class="demo-controls__optional">
+            <summary class="demo-controls__optional-summary">Додаткові перевірки</summary>
+            <div class="demo-controls__group">
+              <span class="demo-controls__label">Довгий текст кнопки</span>
+              <p class="demo-controls__hint">Чи не ламається верстка на німецькій / португальській.</p>
+              <div class="demo-controls__buttons">
+                <button type="button" class="demo-chip" data-label="Sign up" aria-pressed="true">EN</button>
+                <button type="button" class="demo-chip" data-label="Jetzt registrieren" aria-pressed="false">
+                  DE
+                </button>
+                <button type="button" class="demo-chip" data-label="Criar conta agora" aria-pressed="false">
+                  PT
+                </button>
+              </div>
+            </div>
+            <div class="demo-controls__group">
+              <span class="demo-controls__label">Доступність</span>
+              <p class="demo-controls__hint">
+                Як для людей з увімкненим «Зменшити рух» у системі — без декоративних ефектів.
+              </p>
+              <div class="demo-controls__buttons">
+                <button type="button" class="demo-chip" data-toggle="reduced-motion" aria-pressed="false">
+                  Без анімацій
+                </button>
+              </div>
+            </div>
+          </details>
+
+        </aside>
+
+        <section class="demo-content" aria-label="Макет форми та варіанти анімації">
+          <div class="site-preview" id="site-preview">
+            <div
+              id="popup"
+              class="site-preview__popup absolute w-full min-h-full z-[1] text-support"
+              data-test="popup-layout"
+            >
+              <div
+                class="site-preview__header w-full h-[4.5rem] p-4 flex justify-between items-center z-[2] border-t-4 border-primary-20/40 md:border-t-0 bg-dark md:bg-backdrop-alt-2"
+                data-test="popup-header"
+              >
+                <div class="w-10 h-10">
+                  <a
+                    href="#"
+                    class="flex items-center w-full cursor-pointer"
+                    data-test="logo"
+                    title="WinSpirit Casino"
+                    tabindex="-1"
+                  >
+                    <img
+                      class="ui-image logo__img w-10 h-10"
+                      src="https://winspirit3.com/dist/logo-DBIWLpkW.png"
+                      srcset="
+                        https://winspirit3.com/dist/logo-DBIWLpkW.png    1x,
+                        https://winspirit3.com/dist/logo@2x-BdoE5OZ5.png 2x
+                      "
+                      alt="WinSpirit Casino"
+                      width="40"
+                      height="40"
+                      loading="eager"
+                    />
+                  </a>
+                </div>
+                <div class="text-body font-bold text-light" data-test="popup-title">Sign up</div>
+                <div data-test="popup__exit" class="text-light" aria-hidden="true">
+                  <div class="ui-icon w-6 h-6">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19.6451 4.36708C19.1718 3.89382 18.4073 3.89382 17.934 4.36708L12 10.289L6.06598 4.35495C5.59272 3.88168 4.82821 3.88168 4.35495 4.35495C3.88168 4.82821 3.88168 5.59272 4.35495 6.06598L10.289 12L4.35495 17.934C3.88168 18.4073 3.88168 19.1718 4.35495 19.6451C4.82821 20.1183 5.59272 20.1183 6.06598 19.6451L12 13.711L17.934 19.6451C18.4073 20.1183 19.1718 20.1183 19.6451 19.6451C20.1183 19.1718 20.1183 18.4073 19.6451 17.934L13.711 12L19.6451 6.06598C20.1062 5.60485 20.1062 4.82821 19.6451 4.36708Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="site-preview__body flex items-center pt-20 pb-8 overflow-x-hidden overflow-y-auto md:bg-backdrop-alt-2 md:min-h-full"
+              >
+                <div
+                  class="w-full px-4 pb-4 sm:p-0 mx-auto bg-transparent max-w-108"
+                  data-test="registration"
+                >
+                  <form
+                    novalidate
+                    class="tap-highlight-transparent"
+                    id="mock-registration"
+                    data-test="registration-form"
+                  >
+                <div
+                  class="promo-banner flex items-center relative p-4 w-full max-w-[30rem] xs:min-w-[20rem] sm:min-w-[21rem] font-bold text-body text-light rounded-4 overflow-hidden bg-gradient-primary mb-6"
+                  data-test="promo-banner"
+                >
+                  <img
+                    class="ui-image w-[4.5rem] h-[4.5rem] mr-2"
+                    src="./assets/welcome-badge.png"
+                    alt=""
+                    width="72"
+                    height="72"
+                    loading="lazy"
+                  />
+                  <div class="z-[1] min-w-0">
+                    <div class="text-caption-m font-bold text-personal">Casino bonus</div>
+                    <div class="text-body font-bold text-light">
+                      Up to 400 EUR + 100 FS
+                      <div class="promo-banner__subtitle text-caption-m font-normal">
+                        for the first 2 deposits
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pb-4 flex">
+                  <div class="ui-input w-full">
+                    <label
+                      for="email"
+                      class="block mb-1 px-4 text-caption-m inline-block text-support"
+                    >
+                      Email
+                    </label>
+                    <div class="relative flex items-center w-full h-12 text-caption-l outline-none">
+                      <input
+                        id="email"
+                        class="w-full h-full py-0 px-4 m-0 text-left text-light bg-extra-input rounded-6 outline-none transition-[padding] duration-300 ease-easing border border-extra-input placeholder:text-support focus:!border-primary-40 pr-8"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        placeholder="Enter email"
+                        data-test="registration__input--email"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pb-4 flex">
+                  <div class="ui-input w-full">
+                    <label
+                      for="password"
+                      class="block mb-1 px-4 text-caption-m inline-block text-support"
+                    >
+                      Password
+                    </label>
+                    <div class="relative flex items-center w-full h-12 text-caption-l outline-none">
+                      <input
+                        id="password"
+                        class="w-full h-full py-0 px-4 m-0 text-left text-light bg-extra-input rounded-6 outline-none transition-[padding] duration-300 ease-easing border border-extra-input placeholder:text-support focus:!border-primary-40 pr-8"
+                        name="password"
+                        type="password"
+                        autocomplete="new-password"
+                        placeholder="Create password"
+                        data-test="registration__input--password"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pb-4 flex">
+                  <div class="w-full" data-test="countries-field">
+                    <div class="ui-select text-caption-m w-full">
+                      <label for="country" class="block mb-1 px-4 text-caption-m text-support">
+                        Country
+                      </label>
+                      <div class="relative text-support text-caption-l">
+                        <div
+                          class="absolute inset-y-0 left-4 flex items-center pointer-events-none"
+                          aria-hidden="true"
+                        >
+                          <div class="iti-flag au"></div>
+                        </div>
+                        <select
+                          id="country"
+                          autocomplete="country"
+                          class="w-full h-12 pl-12 pr-8 rounded-6 outline-none cursor-pointer appearance-none border px-4 bg-extra-input focus:border-primary-40 border-extra-input text-light"
+                          name="country"
+                          data-test="country-select"
+                        >
+                          <option value="AU">Australia</option>
+                          <option value="CA">Canada</option>
+                          <option value="DE">Germany</option>
+                        </select>
+                        <div
+                          class="ui-icon w-5 h-5 absolute inset-y-0 right-3 my-auto mx-0 pointer-events-none text-light"
+                          aria-hidden="true"
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M7.14541 8.35535L12.0063 13.0691L16.8671 8.35535C17.3557 7.88155 18.145 7.88155 18.6336 8.35535C19.1221 8.82916 19.1221 9.59453 18.6336 10.0683L12.8832 15.6446C12.3946 16.1185 11.6054 16.1185 11.1168 15.6446L5.36644 10.0683C4.87785 9.59453 4.87785 8.82916 5.36644 8.35535C5.85503 7.8937 6.65682 7.88155 7.14541 8.35535Z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex-[1_0_5.5rem] ml-4" data-test="registration__input--currency">
+                    <div class="w-full" data-test="currencies-field">
+                      <div class="ui-select text-caption-m w-full">
+                        <label for="currency" class="block mb-1 px-4 text-caption-m text-support">
+                          Currency
+                        </label>
+                        <div class="relative text-support text-caption-l">
+                          <select
+                            id="currency"
+                            autocomplete="currency"
+                            class="w-full h-12 pl-4 pr-8 rounded-6 outline-none cursor-pointer appearance-none border px-4 bg-extra-input focus:border-primary-40 border-extra-input text-light"
+                            name="currency"
+                            data-test="currency-select"
+                          >
+                            <option value="AUD">AUD</option>
+                            <option value="NZD">NZD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="EUR" selected>EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="INR">INR</option>
+                            <option value="BRL">BRL</option>
+                          </select>
+                          <div
+                            class="ui-icon w-5 h-5 absolute inset-y-0 right-3 my-auto mx-0 pointer-events-none text-light"
+                            aria-hidden="true"
+                          >
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M7.14541 8.35535L12.0063 13.0691L16.8671 8.35535C17.3557 7.88155 18.145 7.88155 18.6336 8.35535C19.1221 8.82916 19.1221 9.59453 18.6336 10.0683L12.8832 15.6446C12.3946 16.1185 11.6054 16.1185 11.1168 15.6446L5.36644 10.0683C4.87785 9.59453 4.87785 8.82916 5.36644 8.35535C5.85503 7.8937 6.65682 7.88155 7.14541 8.35535Z"
+                                fill="currentColor"
+                              ></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pb-6" data-test="registration-rules">
+                  <div class="relative flex mb-2">
+                    <label
+                      class="ui-checkbox relative flex max-w-max select-none text-support cursor-pointer"
+                      data-test="accept-notifications"
+                    >
+                      <input
+                        id="marketing"
+                        class="peer absolute top-0 left-0 opacity-0 w-6 h-6"
+                        type="checkbox"
+                        name="accept-notifications"
+                        checked
+                      />
+                      <span
+                        class="shrink-0 w-6 h-6 border-2 rounded-1 border-extra-input bg-transparent peer-checked:bg-primary-20 peer-checked:border-primary-20 text-dark flex items-center justify-center peer-checked:[&_svg]:opacity-100"
+                        aria-hidden="true"
+                      >
+                        <svg
+                          class="w-full h-full opacity-0"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8.6 16.3l-3.8-3.8a1 1 0 00-1.5 0c-.4.4-.4 1 0 1.5l4.5 4.7a1 1 0 001.5 0L20.7 6.9c.4-.4.4-1.1 0-1.6a1 1 0 00-1.5 0l-10.6 11z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="text-caption-m text-light ml-4">
+                        Stay tuned for personal offers and new promos
+                      </span>
+                    </label>
+                  </div>
+
+                  <div class="accept-terms relative flex mb-2">
+                    <label
+                      class="ui-checkbox relative flex max-w-max select-none text-support cursor-pointer"
+                      data-test="accept-terms"
+                    >
+                      <input
+                        id="terms"
+                        class="peer absolute top-0 left-0 opacity-0 w-6 h-6"
+                        type="checkbox"
+                        name="accept-terms"
+                        checked
+                      />
+                      <span
+                        class="shrink-0 w-6 h-6 border-2 rounded-1 border-extra-input bg-transparent peer-checked:bg-primary-20 peer-checked:border-primary-20 text-dark flex items-center justify-center peer-checked:[&_svg]:opacity-100"
+                        aria-hidden="true"
+                      >
+                        <svg
+                          class="w-full h-full opacity-0"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M8.6 16.3l-3.8-3.8a1 1 0 00-1.5 0c-.4.4-.4 1 0 1.5l4.5 4.7a1 1 0 001.5 0L20.7 6.9c.4-.4.4-1.1 0-1.6a1 1 0 00-1.5 0l-10.6 11z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="text-caption-m text-light ml-4">
+                        I'm 18 years old and accept
+                        <span
+                          class="ui-link cursor-pointer underline font-bold text-link hover:text-link-active"
+                          data-test="rules-link"
+                          tabindex="-1"
+                          >Terms and Conditions</span
+                        >
+                        and
+                        <span
+                          class="ui-link cursor-pointer underline font-bold text-link hover:text-link-active"
+                          data-test="privacy-link"
+                          tabindex="-1"
+                          >Privacy policy</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="registration__action mt-2 mb-4 flex justify-center">
+                  <button
+                    class="ui-button cta-interaction-layer flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 hover:bg-primary-10 active:bg-primary-50 w-full AnimatedCtaButtonPreview cta-animation--shimmer"
+                    type="submit"
+                    data-test="registration__action"
+                    id="form-cta"
+                  >
+                    <span class="ui-button__label">Sign up</span>
+                    <img
+                      class="ui-image w-6 h-6 ui-button__icon"
+                      src="./assets/image-gift.png"
+                      alt="image-gift"
+                      width="24"
+                      height="24"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <span class="block text-center text-caption-l text-light" data-test="registration-login">
+                  Have an account?&nbsp;
+                  <a
+                    href="#"
+                    class="ui-link cursor-pointer underline font-bold text-link hover:text-link-active"
+                    data-test="login-link"
+                    tabindex="-1"
+                    >Log in</a
+                  >
+                </span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mobile-photo-preview" id="mobile-photo-preview" aria-label="Перегляд мобільного скріншота">
+            <div class="mobile-photo-preview__device">
+              <div class="phone-device" role="presentation">
+                <span class="phone-device__button phone-device__button--silent" aria-hidden="true"></span>
+                <span class="phone-device__button phone-device__button--volume-up" aria-hidden="true"></span>
+                <span class="phone-device__button phone-device__button--volume-down" aria-hidden="true"></span>
+                <span class="phone-device__button phone-device__button--power" aria-hidden="true"></span>
+
+                <div class="phone-device__chassis">
+                  <div class="phone-device__bezel">
+                    <div class="phone-device__display">
+                      <div class="mobile-photo-shell">
+                        <img
+                          class="mobile-photo-shell__screen"
+                          src="./assets/mobile-home-screenshot.png"
+                          alt=""
+                          width="531"
+                          height="1024"
+                          decoding="async"
+                        />
+                        <footer class="mobile-photo-shell__dock">
+                          <button type="button" class="mobile-photo-shell__play-casino" tabindex="-1">Play casino</button>
+                          <div class="mobile-photo-shell__auth">
+                            <button type="button" class="mobile-photo-shell__login" tabindex="-1">Log in</button>
+                            <button
+                              type="button"
+                              class="ui-button cta-interaction-layer mobile-photo-shell__signup flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-3 text-caption-m text-dark bg-primary-20 hover:bg-primary-10 active:bg-primary-50 AnimatedCtaButtonPreview cta-animation--shimmer"
+                              id="mobile-screenshot-cta"
+                            >
+                              <span class="ui-button__label">Sign up</span>
+                              <img
+                                class="ui-image w-6 h-6 ui-button__icon"
+                                src="./assets/image-gift.png"
+                                alt="image-gift"
+                                width="24"
+                                height="24"
+                                loading="lazy"
+                              />
+                            </button>
+                          </div>
+                          <nav class="mobile-photo-shell__nav" aria-label="Main">
+                            <span class="mobile-photo-shell__nav-item mobile-photo-shell__nav-item--active">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M8 9h2M14 9h2M8 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                              </svg>
+                              Casino
+                            </span>
+                            <span class="mobile-photo-shell__nav-item">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                              </svg>
+                              Live
+                            </span>
+                            <span class="mobile-photo-shell__nav-item">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5" />
+                                <path
+                                  d="M6.5 12a5.5 5.5 0 0 1 11 0"
+                                  stroke="currentColor"
+                                  stroke-width="1.5"
+                                />
+                                <path d="M12 7.5v9" stroke="currentColor" stroke-width="1.5" />
+                              </svg>
+                              Sports
+                            </span>
+                            <span class="mobile-photo-shell__nav-item">
+                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+                                <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                                <circle cx="18" cy="12" r="1.5" fill="currentColor" />
+                              </svg>
+                              More
+                            </span>
+                          </nav>
+                        </footer>
+                      </div>
+
+                      <div class="phone-device__chrome" aria-hidden="true">
+                        <div class="phone-device__island">
+                          <span class="phone-device__island-lens"></span>
+                        </div>
+                        <header class="phone-device__status">
+                          <time class="phone-device__time">9:41</time>
+                          <div class="phone-device__indicators">
+                            <svg class="phone-device__signal" width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true">
+                              <rect x="0" y="7" width="3" height="5" rx="0.5" fill="currentColor" />
+                              <rect x="5" y="5" width="3" height="7" rx="0.5" fill="currentColor" />
+                              <rect x="10" y="3" width="3" height="9" rx="0.5" fill="currentColor" />
+                              <rect x="15" y="0" width="3" height="12" rx="0.5" fill="currentColor" />
+                            </svg>
+                            <svg class="phone-device__wifi" width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true">
+                              <path
+                                d="M8 10.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5ZM3.2 5.4a6.4 6.4 0 0 1 9.6 0"
+                                stroke="currentColor"
+                                stroke-width="1.4"
+                                stroke-linecap="round"
+                              />
+                              <path
+                                d="M1 3.1a9.6 9.6 0 0 1 14 0"
+                                stroke="currentColor"
+                                stroke-width="1.4"
+                                stroke-linecap="round"
+                              />
+                            </svg>
+                            <svg class="phone-device__battery" width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true">
+                              <rect x="0.5" y="2.5" width="20" height="7" rx="2" stroke="currentColor" />
+                              <rect x="2" y="4" width="15" height="4" rx="1" fill="currentColor" />
+                              <path d="M22 5v2a1.5 1.5 0 0 0 0-2Z" fill="currentColor" />
+                            </svg>
+                          </div>
+                        </header>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="variant-detail" id="variant-detail" aria-labelledby="variant-detail-title">
+            <h2 class="variant-detail__title" id="variant-detail-title">Обраний варіант</h2>
+            <p class="variant-detail__intro">
+              Текстовий опис обраного варіанту (без кнопки прев’ю). Запустити анімацію — у акордеоні
+              «Усі варіанти» нижче або «Відтворити» зліва на формі.
+            </p>
+            <div class="variant-detail__mount" id="variant-detail-mount"></div>
+          </section>
+
+          <details class="compare-all-variants" id="compare-all-variants">
+            <summary class="compare-all-variants__summary">Усі варіанти з описом (для детального порівняння)</summary>
+            <p class="demo-controls__hint variant-catalog__intro">
+              Назви збігаються з панеллю зліва.
+              <strong>Більшість варіантів:</strong> «Заповнити форму» → Sign up праворуч; «Відтворити» в картці — анімація на кнопці в цій картці.
+              <strong>Стрілки (hover):</strong> наведіть курсор на кнопку <strong>Sign up</strong> у картці — форма не потрібна.
+            </p>
+            <div class="variant-grid variant-catalog" id="variant-catalog">
+            <article class="variant-card variant-card--recommended" data-variant="shimmer">
+              <h2 class="variant-card__title">М’який шимер</h2>
+              <p class="variant-card__description">
+                Діагональний світловий пробіг по кнопці (блик по поверхні, без зміни розміру кнопки).
+                Один прохід ~3&nbsp;с, плавний, на GPU.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → пауза 700&nbsp;мс → шимер ~3&nbsp;с → пауза 6&nbsp;с →
+                другий такий самий прохід → стоп. «Відтворити» зліва — ще один прохід на Sign up у формі.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--shimmer"
+                  data-variant-button="shimmer"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="shimmer">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card variant-card--recommended" data-variant="pop-shimmer">
+              <h2 class="variant-card__title">Мікро-pop + м’який шимер</h2>
+              <p class="variant-card__description">
+                Одночасно: легке збільшення кнопки (scale до ~1,025, ~1,7&nbsp;с) і той самий діагональний шимер
+                (~3&nbsp;с) по фону кнопки. Сильніший сигнал «можна натискати», ніж лише шимер.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → пауза 600&nbsp;мс → pop + шимер → пауза 6&nbsp;с →
+                другий показ → стоп.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--pop-shimmer"
+                  data-variant-button="pop-shimmer"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="pop-shimmer">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article
+              class="variant-card variant-card--recommended demo-variant-ui--hidden"
+              data-variant="shimmer-border-trace"
+              hidden
+            >
+              <h2 class="variant-card__title">М’який шимер + обвідна анімація</h2>
+              <p class="variant-card__description">
+                Спочатку два проходи шимеру (як «М’який шимер»), потім пауза ~9&nbsp;с і один прохід
+                анімованої кольорової обводки по краю (~3&nbsp;с). У демо приховано в панелі — лишено для архіву.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> 700&nbsp;мс → шимер ×2 (пауза 6&nbsp;с між ними) → ~9&nbsp;с → обвід ×1 → стоп.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--shimmer cta-animation--border-trace"
+                  data-variant-button="shimmer-border-trace"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="shimmer-border-trace">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card" data-variant="glow">
+              <h2 class="variant-card__title">М’яке світіння (дихання)</h2>
+              <p class="variant-card__description">
+                Не пробіг світла, а м’яка <strong>пульсація</strong> ореолу навколо кнопки
+                (<code>box-shadow</code>): наростає й згасає ~1,1&nbsp;с, два «вдихи» за один показ.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → 700&nbsp;мс → пульсація ~2,2&nbsp;с → пауза 6&nbsp;с →
+                другий показ → стоп. Спокійніше за шимер, без руху тексту.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--glow"
+                  data-variant-button="glow"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="glow">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card" data-variant="icon-nudge">
+              <h2 class="variant-card__title">Мікрорух іконки подарунка</h2>
+              <p class="variant-card__description">
+                Лише іконка подарунка робить короткий рух «на себе» (~650&nbsp;мс). Текст і розмір кнопки
+                не змінюються — дискретний акцент на бонусі.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → 700&nbsp;мс → рух іконки → пауза 6&nbsp;с →
+                другий показ → стоп.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--icon-nudge"
+                  data-variant-button="icon-nudge"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="icon-nudge">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card demo-variant-ui--hidden" data-variant="ready-highlight" hidden>
+              <h2 class="variant-card__title">Підсвітка кнопки</h2>
+              <p class="variant-card__description">
+                Короткий спалах яскравості й внутрішня обводка — мінімальний сигнал «форма готова».
+                У панелі приховано; лишено для порівняння.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> як інші варіанти після форми — 700&nbsp;мс → спалах → пауза 6&nbsp;с → ×2 → стоп.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--ready-highlight"
+                  data-variant-button="ready-highlight"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img class="ui-button__icon ui-image w-6 h-6" src="./assets/image-gift.png" alt="image-gift" width="24" height="24" />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="ready-highlight">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card variant-card--compare variant-card--hover-only" data-variant="arrow-hover">
+              <span class="variant-card__badge">Лише десктоп · hover</span>
+              <h2 class="variant-card__title">Стрілка між текстом і подарунком</h2>
+              <p class="variant-card__description">
+                Працює лише при наведенні курсора (десктоп). Між текстом і іконкою з’являється стрілка,
+                проміжок стискається (~0,5&nbsp;с). «Заповнити форму» не потрібно.
+              </p>
+              <p class="variant-card__trigger-note variant-card__trigger-note--hover">
+                Перегляд: наведіть курсор на кнопку <strong>Sign up</strong> нижче.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--arrow-hover"
+                  data-variant-button="arrow-hover"
+                >
+                  <span class="cta-arrow-hover__lead">
+                    <span class="ui-button__label">Sign up</span>
+                    <span class="cta-arrow-hover__arrow" aria-hidden="true">
+                      <svg
+                        class="cta-arrow-hover__icon"
+                        width="15"
+                        height="14"
+                        viewBox="0 0 15 14"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M1.5 7h9.5M8.5 4.5 12 7l-3.5 2.5"
+                          stroke="currentColor"
+                          stroke-width="1.25"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <img
+                    class="ui-button__icon ui-image w-6 h-6"
+                    src="./assets/image-gift.png"
+                    alt="image-gift"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card variant-card--compare variant-card--hover-only" data-variant="arrow-hover-present">
+              <span class="variant-card__badge">Лише десктоп · hover</span>
+              <h2 class="variant-card__title">Стрілка + анімований подарунок</h2>
+              <p class="variant-card__description">
+                Як попередній варіант, плюс анімований <code>present.svg</code> замість статичної іконки
+                (циклічний рух у SVG). Лише наведення курсора, не після заповнення форми.
+              </p>
+              <p class="variant-card__trigger-note variant-card__trigger-note--hover">
+                Перегляд: наведіть курсор на кнопку <strong>Sign up</strong> нижче.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--arrow-hover cta-animation--arrow-hover-present"
+                  data-variant-button="arrow-hover-present"
+                >
+                  <span class="cta-arrow-hover__lead">
+                    <span class="ui-button__label">Sign up</span>
+                    <span class="cta-arrow-hover__arrow" aria-hidden="true">
+                      <svg
+                        class="cta-arrow-hover__icon"
+                        width="15"
+                        height="14"
+                        viewBox="0 0 15 14"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M1.5 7h9.5M8.5 4.5 12 7l-3.5 2.5"
+                          stroke="currentColor"
+                          stroke-width="1.25"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <object
+                    class="ui-button__icon ui-button__icon--present cta-present-icon"
+                    type="image/svg+xml"
+                    data="./assets/present.svg"
+                    aria-hidden="true"
+                  ></object>
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card variant-card--compare" data-variant="hover-glow">
+              <h2 class="variant-card__title">Світіння обводки</h2>
+              <p class="variant-card__description">
+                Кольорове градієнтне кільце по контуру (CSS-цикл переливу ~20&nbsp;с; у демо обводка
+                ввімкнена ~7&nbsp;с за один прохід). Яскравіше за шимер і «дихання».
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → 700&nbsp;мс → обводка ~7&nbsp;с → коротка пауза
+                (~0,4&nbsp;с) → другий показ ~7&nbsp;с → стоп. На вкладці «Мобільний нижній бар» — цикл без форми.
+              </p>
+              <div class="variant-card__preview variant-card__preview--hover-glow">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--hover-glow"
+                  data-variant-button="hover-glow"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img
+                    class="ui-button__icon ui-image w-6 h-6"
+                    src="./assets/image-gift.png"
+                    alt="image-gift"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="hover-glow">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card" data-variant="icon-bounce">
+              <h2 class="variant-card__title">Підстрибування іконки подарунка</h2>
+              <p class="variant-card__description">
+                Іконка подарунка один раз «підстрибує» вгору з легким squash (~900&nbsp;мс).
+                Помітніше за «Мікрорух», але рухається лише іконка.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → 700&nbsp;мс → стрибок → пауза 6&nbsp;с →
+                другий показ → стоп.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--icon-bounce"
+                  data-variant-button="icon-bounce"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img
+                    class="ui-button__icon ui-image w-6 h-6"
+                    src="./assets/image-gift.png"
+                    alt="image-gift"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="icon-bounce">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+
+            <article class="variant-card" data-variant="text-bounce">
+              <h2 class="variant-card__title">Текст торкається подарунка</h2>
+              <p class="variant-card__description">
+                Напис <strong>Sign up</strong> зсувається до іконки, ніби торкається подарунка, і повертається
+                (~950&nbsp;мс). На час анімації збільшується проміжок між текстом і іконкою.
+              </p>
+              <p class="variant-card__trigger-note">
+                <strong>У демо:</strong> «Заповнити форму» → 700&nbsp;мс → рух тексту → пауза 6&nbsp;с →
+                другий показ → стоп. Довгі підписи (DE / PT) — у «Додаткові перевірки» зліва.
+              </p>
+              <div class="variant-card__preview">
+                <button
+                  type="button"
+                  class="ui-button flex gap-2 items-center justify-center cursor-pointer outline-none outline-0 border-0 font-bold rounded-6 transition py-2 px-4 text-caption-l text-dark bg-primary-20 w-full AnimatedCtaButtonPreview cta-animation--text-bounce"
+                  data-variant-button="text-bounce"
+                >
+                  <span class="ui-button__label">Sign up</span>
+                  <img
+                    class="ui-button__icon ui-image w-6 h-6"
+                    src="./assets/image-gift.png"
+                    alt="image-gift"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+              </div>
+              <div class="variant-card__actions">
+                <button type="button" class="demo-btn-secondary" data-replay="text-bounce">
+                  Відтворити
+                </button>
+              </div>
+            </article>
+          </div>
+
+          </details>
+        </section>
+      </div>
+    </main>
+
+    <script src="./demo.js"></script>
+  </body>
+</html>
