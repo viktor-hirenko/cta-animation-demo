@@ -1,5 +1,3 @@
-// Демо анімацій CTA Sign up: валідність форми та запуск відтворення (не прод-код).
-
 const SHIMMER_VARIANT = 'shimmer'
 const SHIMMER_BORDER_VARIANT = 'shimmer-border-trace'
 const POP_SHIMMER_VARIANT = 'pop-shimmer'
@@ -7,6 +5,8 @@ const ARROW_HOVER_VARIANT = 'arrow-hover'
 const ARROW_HOVER_PRESENT_VARIANT = 'arrow-hover-present'
 const ICON_BOUNCE_VARIANT = 'icon-bounce'
 const TEXT_BOUNCE_VARIANT = 'text-bounce'
+const HOVER_GLOW_INFINITE_VARIANT = 'hover-glow-infinite'
+const BORDER_GLOW_INFINITE_VARIANT = 'border-glow-infinite'
 const GIFT_ICON_SRC = './assets/image-gift.png'
 const PRESENT_ICON_SRC = './assets/present.svg'
 const ARROW_HOVER_ICON_HTML =
@@ -26,7 +26,6 @@ const POP_SHIMMER_REPEAT_DELAY_MS = 6000
 const MAX_POP_SHIMMER_PASSES = 2
 const BORDER_TRACE_DELAY_MS = 9000
 const BORDER_TRACE_DURATION_MS = 3000
-const BORDER_TRACE_INFINITE = true
 const MAX_SHIMMER_PASSES = 2
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const MIN_PASSWORD_LENGTH = 8
@@ -44,12 +43,13 @@ const ANIMATION_VARIANTS = [
   'hover-glow',
   ICON_BOUNCE_VARIANT,
   TEXT_BOUNCE_VARIANT,
+  HOVER_GLOW_INFINITE_VARIANT,
+  BORDER_GLOW_INFINITE_VARIANT,
 ]
 
 const HOVER_ONLY_VARIANTS = new Set([ARROW_HOVER_VARIANT, ARROW_HOVER_PRESENT_VARIANT])
 
 const READY_HIGHLIGHT_VARIANT = 'ready-highlight'
-/** Варіанти без пунктів у пікері та каталозі (клас demo-variant-ui--hidden). */
 const UI_HIDDEN_VARIANTS = new Set([SHIMMER_BORDER_VARIANT, READY_HIGHLIGHT_VARIANT])
 
 function isVariantHiddenInUi(variantId) {
@@ -77,6 +77,8 @@ const VARIANT_ANIMATION_MS = {
   'hover-glow': 6000,
   [ICON_BOUNCE_VARIANT]: 900,
   [TEXT_BOUNCE_VARIANT]: 950,
+  [HOVER_GLOW_INFINITE_VARIANT]: HOVER_GLOW_PASS_MS,
+  [BORDER_GLOW_INFINITE_VARIANT]: BORDER_TRACE_DURATION_MS,
 }
 
 const demoRoot = document.getElementById('cta-animation-demo')
@@ -347,12 +349,32 @@ function usesHoverGlowSequence() {
   return selectedVariant === HOVER_GLOW_VARIANT
 }
 
+function usesHoverGlowInfiniteSequence() {
+  return selectedVariant === HOVER_GLOW_INFINITE_VARIANT
+}
+
+function usesBorderGlowInfiniteSequence() {
+  return selectedVariant === BORDER_GLOW_INFINITE_VARIANT
+}
+
+function shouldBorderTraceRunInfinite(button = getPrimaryCta()) {
+  if (selectedVariant === BORDER_GLOW_INFINITE_VARIANT) {
+    return true
+  }
+
+  return (
+    selectedVariant === SHIMMER_BORDER_VARIANT && button === getPrimaryCta()
+  )
+}
+
 function usesGenericReadySequence() {
   return (
     !usesHoverOnlyVariant() &&
     !usesShimmerSequence() &&
     !usesPopShimmerSequence() &&
-    !usesHoverGlowSequence()
+    !usesHoverGlowSequence() &&
+    !usesHoverGlowInfiniteSequence() &&
+    !usesBorderGlowInfiniteSequence()
   )
 }
 
@@ -436,7 +458,15 @@ function syncDemoControlsForMode() {
   }
 
   if (presentationVariantHint) {
-    if (mobile) {
+    if (usesHoverGlowInfiniteSequence()) {
+      presentationVariantHint.innerHTML = mobile
+        ? 'Те саме кольорове кільце, що «Світіння кольорової обводки», але без паузи й без циклу демо ~7&nbsp;с.'
+        : 'Після «Заповнити форму» — те саме кольорове кільце на <strong>Sign up</strong>, без паузи й без повтору циклу.'
+    } else if (usesBorderGlowInfiniteSequence()) {
+      presentationVariantHint.innerHTML = mobile
+        ? 'Безперервна біла обводка на <strong>Sign up</strong> у телефоні — без паузи й без циклу демо ~7&nbsp;с.'
+        : 'Після «Заповнити форму» — безперервна біла обводка на <strong>Sign up</strong>, без паузи й без повтору циклу.'
+    } else if (mobile) {
       presentationVariantHint.innerHTML =
         'Оберіть варіант — анімація одразу на кнопці <strong>Sign up</strong> праворуч; повтор циклу ~7&nbsp;с.'
     } else if (usesHoverOnlyVariant()) {
@@ -625,6 +655,7 @@ function stripAnimationClasses(button) {
   })
   button.classList.remove(`${ANIMATION_CLASS_PREFIX}border-trace`)
   button.classList.remove(`${ANIMATION_CLASS_PREFIX}arrow-hover`)
+  button.classList.remove('is-border-tracing')
 }
 
 function applyCtaAnimationClass(button, variantId) {
@@ -635,6 +666,19 @@ function applyCtaAnimationClass(button, variantId) {
     button.classList.add(
       `${ANIMATION_CLASS_PREFIX}shimmer`,
       `${ANIMATION_CLASS_PREFIX}border-trace`
+    )
+    return
+  }
+
+  if (variantId === BORDER_GLOW_INFINITE_VARIANT) {
+    button.classList.add(`${ANIMATION_CLASS_PREFIX}border-trace`)
+    return
+  }
+
+  if (variantId === HOVER_GLOW_INFINITE_VARIANT) {
+    button.classList.add(
+      `${ANIMATION_CLASS_PREFIX}${HOVER_GLOW_VARIANT}`,
+      `${ANIMATION_CLASS_PREFIX}${HOVER_GLOW_INFINITE_VARIANT}`
     )
     return
   }
@@ -935,7 +979,7 @@ function playBorderTrace(button) {
     button._borderTraceTimeoutId = null
   }
 
-  if (!BORDER_TRACE_INFINITE) {
+  if (!shouldBorderTraceRunInfinite(button)) {
     button._borderTraceTimeoutId = window.setTimeout(() => {
       button._borderTraceTimeoutId = null
       handleBorderTraceAnimationEnd(button)
@@ -1171,9 +1215,50 @@ function triggerReadyAnimations() {
     return
   }
 
+  if (usesHoverGlowInfiniteSequence()) {
+    startHoverGlowInfiniteSequence()
+    return
+  }
+
+  if (usesBorderGlowInfiniteSequence()) {
+    startBorderGlowInfiniteSequence()
+    return
+  }
+
   if (usesGenericReadySequence()) {
     startGenericReadySequence()
   }
+}
+
+function startHoverGlowInfiniteSequence() {
+  cancelShimmerSequence()
+  cancelPopShimmerSequence()
+  cancelGenericReadySequence()
+  cancelMobileLoop()
+
+  if (isPlaybackBlocked()) {
+    return
+  }
+
+  const button = getPrimaryCta()
+  applyCtaAnimationClass(button, HOVER_GLOW_INFINITE_VARIANT)
+  button.classList.remove('is-ready-animate', 'is-hover-animate')
+}
+
+function startBorderGlowInfiniteSequence() {
+  cancelShimmerSequence()
+  cancelPopShimmerSequence()
+  cancelGenericReadySequence()
+  cancelMobileLoop()
+
+  if (isPlaybackBlocked()) {
+    return
+  }
+
+  const button = getPrimaryCta()
+  applyCtaAnimationClass(button, BORDER_GLOW_INFINITE_VARIANT)
+  button.classList.remove('is-ready-animate', 'is-hover-animate')
+  playBorderTrace(button)
 }
 
 function clearReadyAnimateClasses() {
@@ -1694,6 +1779,27 @@ function replayVariantAnimation(variantId, replayTrigger = null) {
     return
   }
 
+  if (variantId === HOVER_GLOW_INFINITE_VARIANT) {
+    if (isPlaybackBlocked()) {
+      return
+    }
+
+    applyCtaAnimationClass(button, HOVER_GLOW_INFINITE_VARIANT)
+    button.classList.remove('is-ready-animate', 'is-hover-animate')
+    return
+  }
+
+  if (variantId === BORDER_GLOW_INFINITE_VARIANT) {
+    if (isPlaybackBlocked()) {
+      return
+    }
+
+    applyCtaAnimationClass(button, BORDER_GLOW_INFINITE_VARIANT)
+    button.classList.remove('is-ready-animate', 'is-hover-animate')
+    playBorderTrace(button)
+    return
+  }
+
   playInstantVariantAnimation(button)
 }
 
@@ -1745,7 +1851,10 @@ function handlePrimaryCtaAnimationEnd(event) {
     }
   }
 
-  if (event.animationName === 'cta-border-angle' && !BORDER_TRACE_INFINITE) {
+  if (
+    event.animationName === 'cta-border-angle' &&
+    !shouldBorderTraceRunInfinite(button)
+  ) {
     handleBorderTraceAnimationEnd(primaryCta)
   }
 }
@@ -1766,7 +1875,10 @@ variantButtons.forEach(button => {
         handleShimmerSweepEnd(button, event)
       }
 
-      if (event.animationName === 'cta-border-angle' && !BORDER_TRACE_INFINITE) {
+      if (
+    event.animationName === 'cta-border-angle' &&
+    !shouldBorderTraceRunInfinite(button)
+  ) {
         handleBorderTraceAnimationEnd(button)
       }
     })
